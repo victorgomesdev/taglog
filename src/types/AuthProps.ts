@@ -4,8 +4,8 @@ type AuthProps = {
     isLogged: boolean,
     setLogged: any,
     login?: ()=> Promise<any>,
-    logout?: ()=> void
-    user?: User
+    token?: string,
+    user?: User,
 }
 
 export default AuthProps

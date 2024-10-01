@@ -6,9 +6,11 @@ import AuthProps from "../types/AuthProps"
 export default function useAuth(): AuthProps {
 
     const [isLogged, setLogged] = useState(false)
-    
+    const [token, setToken] = useState(undefined)
+
     return {
         isLogged: isLogged,
         setLogged: setLogged,
+        token: token
     }
 }
