@@ -7,8 +7,10 @@ import useAuth from '../hooks/useAuth'
 export default function LoginScreen() {
 
     //TODO criar uma função de login que chama a hook se houver dados, redireciona e salva no contexto
-    const auth = useAuth()
+
     const { isLogged, setLogged }: any = useContext(AuthContext)
+
+    
     return (
         <View >
             <Text style={{ color: 'blue' }}>LOGIN SCREEN</Text>
@@ -16,7 +18,8 @@ export default function LoginScreen() {
             <Button
                 title='LOGIN'
                 onPress={ () => {
-                    
+                    setLogged(!isLogged)
+                    router.replace('/(app)')
                 }} />
         </View>
     )

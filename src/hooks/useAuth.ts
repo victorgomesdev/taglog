@@ -1,25 +1,14 @@
-import { useContext } from "react"
-import { AuthContext } from "../app/_layout"
+import { useState } from "react"
+import AuthProps from "../types/AuthProps"
 
+//TODO Implementar as funções de login() e logout() para poderem ser retornadas na hook
 
-//TODO Fazer o mock dos dados de retorno da hook, deve retornar os dados do usuário através do service
-// type User = {
-//     nome: string,
-//     id: string,
-//     email: string,
-//     tipo: string
-// }
-// type AuthProps = {
-//     isLogged: boolean,
-//     setLogged: ()=> void,
-//     user: User
-// }
+export default function useAuth(): AuthProps {
 
-export default function useAuth(): boolean {
-
-    const { isLogged, setLogged }: any = useContext(AuthContext)
-
-    setLogged(!isLogged)
-    setTimeout(()=> {}, 1000)
-    return isLogged
+    const [isLogged, setLogged] = useState(false)
+    
+    return {
+        isLogged: isLogged,
+        setLogged: setLogged,
+    }
 }
