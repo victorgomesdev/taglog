@@ -1,8 +1,8 @@
-import { View, Text, Button } from 'react-native'
-import { useContext } from 'react'
+import { Keyboard, KeyboardAvoidingView, StyleSheet, View } from 'react-native'
+import { useContext} from 'react'
 import { AuthContext } from './_layout'
+import { TextInput, Button } from 'react-native-paper'
 import { router } from 'expo-router'
-import useAuth from '../hooks/useAuth'
 
 export default function LoginScreen() {
 
@@ -10,17 +10,66 @@ export default function LoginScreen() {
 
     const { isLogged, setLogged }: any = useContext(AuthContext)
 
-    
     return (
-        <View >
-            <Text style={{ color: 'blue' }}>LOGIN SCREEN</Text>
-            <Text>{isLogged ? "t" : "f"}</Text>
-            <Button
-                title='LOGIN'
-                onPress={ () => {
+        <KeyboardAvoidingView
+            style={style.screen}
+        >
+            <View style={style.inputContainer} >
+                <TextInput
+                    label={"Email"}
+                    mode='outlined'
+                    style={style.inputs}
+                />
+
+                <TextInput
+                    label={"Senha"}
+                    mode='outlined'
+                    secureTextEntry
+                    style={style.inputs}
+                />
+            </View>
+
+            <View style={style.buttonContainer}>
+                <Button mode='outlined' onPress={() => { }}>
+                    CRIAR CONTA
+                </Button>
+                <Button mode='contained' onPress={() => {
                     setLogged(!isLogged)
                     router.replace('/(app)')
-                }} />
-        </View>
+                    }}>
+                    ENTRAR
+                </Button>
+            </View>
+        </KeyboardAvoidingView>
     )
 }
+
+const style = StyleSheet.create({
+    screen: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 50
+    },
+    inputs: {
+        width: '100%'
+    },
+    inputContainer: {
+        width: '90%',
+        gap: 15
+    },
+    buttons: {
+        width: '25%',
+    },
+    buttonContainer: {
+        width: '90%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    image: {
+
+    }
+})

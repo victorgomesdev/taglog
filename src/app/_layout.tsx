@@ -3,10 +3,10 @@ import { Stack } from 'expo-router'
 import AuthProps from '../types/AuthProps'
 import useAuth from '../hooks/useAuth'
 import { PaperProvider } from 'react-native-paper'
+import { theme } from '../constants/Theme'
 
 export const AuthContext = createContext<AuthProps>({
-    isLogged: false,
-    setLogged: () => { }
+    isLogged: false
 })
 
 export default function Layout() {
@@ -27,7 +27,7 @@ export default function Layout() {
     return (
 
         <AuthProvider>
-            <PaperProvider>
+            <PaperProvider theme={{dark: false, colors: theme.colors}}>
                 <Stack screenOptions={{
                     statusBarColor: '#0023db'
                 }}>

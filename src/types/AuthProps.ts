@@ -2,7 +2,7 @@ import User from "./User"
 
 type AuthProps = {
     isLogged: boolean,
-    setLogged: any,
+    setLogged?: any,
     login?: ()=> Promise<any>,
     token?: string,
     user?: User,
