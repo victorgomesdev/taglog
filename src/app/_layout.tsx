@@ -29,7 +29,7 @@ export default function Layout() {
         <AuthProvider>
             <PaperProvider theme={{dark: false, colors: theme.colors}}>
                 <Stack screenOptions={{
-                    statusBarColor: '#0023db'
+                    statusBarColor: '#0023db',
                 }}>
                     <Stack.Screen
                         name='login'
