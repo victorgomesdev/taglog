@@ -1,21 +1,40 @@
 import { View, StyleSheet, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Icon } from "react-native-paper";
+import { Button } from "react-native-paper";
 
 type HeaderProps = {
-    left: any,
-    right?: React.FC
+    LeftText: string,
+    LeftIcon?: boolean,
+    RightButton?: {
+        ButtonText: string,
+        ButtonMode: 'text' | 'outlined' | 'contained',
+        ButtonColor: string,
+    }
 }
 
-export default function Header({ left, right }: HeaderProps) {
+export default function Header({ LeftText, LeftIcon, RightButton }: HeaderProps) {
 
     return (
-        <View style={style.header}>
-            <>
-                <MaterialIcons name="person" size={25} color={style.headerText.color}/>
-            </>
-            <Text style={style.headerText}>OLÁ {left}</Text>
+        <View
+            style={[style.header, { justifyContent: RightButton === undefined ? 'flex-start' : 'space-around' }]}>
+            <View style={[style.headerTextContainer, { marginLeft: RightButton === undefined ? 33 : 0 }]}>
+                {LeftIcon && (
+                    <MaterialIcons name={'person'} size={15} color={style.headerText.color} />
+                )}
+                <Text style={style.headerText}>OLÁ {LeftText}</Text>
+            </View>
+
+            {RightButton && (
+                <Button
+                    
+                    mode={RightButton.ButtonMode}
+                    buttonColor={RightButton.ButtonColor}
+                    onPress={() => { }}
+                >
+                    {RightButton.ButtonText}
+                </Button>
+            )}
         </View>
     )
 }
@@ -27,12 +46,19 @@ const style = StyleSheet.create({
         backgroundColor: "#0023db",
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        gap: 80
     },
     headerText: {
         color: 'white',
         fontSize: 15,
         marginLeft: 5
+    },
+    headerTextContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    button:{
+        
     }
 })

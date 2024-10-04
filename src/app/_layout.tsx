@@ -22,12 +22,13 @@ export default function Layout() {
                 setLogged: setLogged
             }}>
                 {children}
-            </AuthContext.Provider>)
+            </AuthContext.Provider>
+        )
     }
     return (
 
         <AuthProvider>
-            <PaperProvider theme={{dark: false, colors: theme.colors}}>
+            <PaperProvider theme={{ dark: false, colors: theme.colors }}>
                 <Stack screenOptions={{
                     statusBarColor: '#0023db',
                 }}>
