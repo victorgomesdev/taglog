@@ -7,9 +7,10 @@ type HeaderProps = {
     LeftText: string,
     LeftIcon?: boolean,
     RightButton?: {
-        ButtonText: string,
-        ButtonMode: 'text' | 'outlined' | 'contained',
-        ButtonColor: string,
+        buttonText: string,
+        buttonMode: 'text' | 'outlined' | 'contained',
+        buttonColor: string,
+        disabled: boolean
     }
 }
 
@@ -28,11 +29,12 @@ export default function Header({ LeftText, LeftIcon, RightButton }: HeaderProps)
             {RightButton && (
                 <Button
                     
-                    mode={RightButton.ButtonMode}
-                    buttonColor={RightButton.ButtonColor}
+                    mode={RightButton.buttonMode}
+                    buttonColor={RightButton.buttonColor}
                     onPress={() => { }}
+                    disabled={RightButton.disabled}
                 >
-                    {RightButton.ButtonText}
+                    {RightButton.buttonText}
                 </Button>
             )}
         </View>

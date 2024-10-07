@@ -2,9 +2,9 @@ export type Product = {
     id: string,
     code: string,
     description?: string,
-    state: '',
+    state: 'P' | 'F' | 'E' | 'D',
     address: {
-        street: number,
+        street: string,
         num: number,
         district: string,
         city: string,
