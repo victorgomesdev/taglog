@@ -13,12 +13,21 @@ export default function HomeScreen() {
 
     return (
         <View style={style.screen}>
-            <Header LeftText='Olá'
-                RightButton={{ buttonColor: 'green', buttonText: 'INICIAR', buttonMode: 'contained', disabled: false }}
-                LeftIcon />
-            <Card address={{ city: 'paj', district: 'caicaras', num: 800, state: '', street: 'major gote', }} code='gdgdfg' id='hgsvbjvaauv' state='E' />
+            <Header leftText='Olá'
+                rightButton={{ buttonColor: 'green', buttonText: 'INICIAR', buttonMode: 'contained', disabled: false }}
+                leftIcon/>
+            <Card
+                address={{
+                    city: 'paj',
+                    district: 'caicaras',
+                    num: 800,
+                    state: '',
+                    street: 'major gote'
+                }}
+                code='gdgdfg'
+                id='hgsvbjvaauv'
+                state='E' />
             <Button onPress={() => {
-
                 setLogged(!isLogged)
                 router.replace('/login')
             }

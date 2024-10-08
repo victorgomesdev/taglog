@@ -1,5 +1,5 @@
-import { KeyboardAvoidingView, StyleSheet, View, Image, Text } from 'react-native'
-import { useContext, useState, useRef} from 'react'
+import { KeyboardAvoidingView, StyleSheet, View, Image } from 'react-native'
+import { useContext, useState } from 'react'
 import { AuthContext } from './_layout'
 import { TextInput, Button } from 'react-native-paper'
 import { router } from 'expo-router'

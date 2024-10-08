@@ -4,9 +4,9 @@ import React from "react";
 import { Button } from "react-native-paper";
 
 type HeaderProps = {
-    LeftText: string,
-    LeftIcon?: boolean,
-    RightButton?: {
+    leftText: string,
+    leftIcon?: boolean,
+    rightButton?: {
         buttonText: string,
         buttonMode: 'text' | 'outlined' | 'contained',
         buttonColor: string,
@@ -14,27 +14,26 @@ type HeaderProps = {
     }
 }
 
-export default function Header({ LeftText, LeftIcon, RightButton }: HeaderProps) {
+export default function Header({ leftText, leftIcon, rightButton }: HeaderProps) {
 
     return (
         <View
-            style={[style.header, { justifyContent: RightButton === undefined ? 'flex-start' : 'space-around' }]}>
-            <View style={[style.headerTextContainer, { marginLeft: RightButton === undefined ? 33 : 0 }]}>
-                {LeftIcon && (
+            style={[style.header, { justifyContent: rightButton === undefined ? 'flex-start' : 'space-around' }]}>
+            <View style={[style.headerTextContainer, { marginLeft: rightButton === undefined ? 33 : 0 }]}>
+                {leftIcon && (
                     <MaterialIcons name={'person'} size={15} color={style.headerText.color} />
                 )}
-                <Text style={style.headerText}>OLÁ {LeftText}</Text>
+                <Text style={style.headerText}>OLÁ {leftText}</Text>
             </View>
 
-            {RightButton && (
+            {rightButton && (
                 <Button
-                    
-                    mode={RightButton.buttonMode}
-                    buttonColor={RightButton.buttonColor}
+                    mode={rightButton.buttonMode}
+                    buttonColor={rightButton.buttonColor}
                     onPress={() => { }}
-                    disabled={RightButton.disabled}
+                    disabled={rightButton.disabled}
                 >
-                    {RightButton.buttonText}
+                    {rightButton.buttonText}
                 </Button>
             )}
         </View>

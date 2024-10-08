@@ -3,7 +3,7 @@ type User = {
     name: string,
     email: string,
     account:{
-        type: '',
+        type: 'D' | 'E',
         state?: 'D' | 'O'
     }
 }
