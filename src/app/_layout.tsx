@@ -6,20 +6,23 @@ import { PaperProvider } from 'react-native-paper'
 import { theme } from '../constants/Theme'
 
 export const AuthContext = createContext<AuthProps>({
-    isLogged: false
+    isLogged: false,
+    login: (email, password) => {
+        return new Promise<void>((a, r) => { })
+    },
+    setLogged: ()=>{}
 })
 
 export default function Layout() {
 
 
-    const { isLogged, setLogged } = useAuth()
+    const { isLogged, error, login, token, user, setLogged } = useAuth()
 
     const AuthProvider = ({ children }: any) => {
 
         return (
             <AuthContext.Provider value={{
-                isLogged: isLogged,
-                setLogged: setLogged
+                isLogged, error, login, token, user, setLogged
             }}>
                 {children}
             </AuthContext.Provider>

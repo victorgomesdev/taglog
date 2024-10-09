@@ -8,8 +8,11 @@ export default function LoginScreen() {
 
     //TODO criar uma função de login que chama a hook se houver dados, redireciona e salva no contexto
 
-    const { isLogged, setLogged }: any = useContext(AuthContext)
     const [isSecured, setsecure] = useState(false)
+    const { login, error } = useContext(AuthContext)
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [loading, setLoading] = useState(false)
 
     return (
         <KeyboardAvoidingView
@@ -18,12 +21,13 @@ export default function LoginScreen() {
             <Image
                 source={require('../assets/logo-taglog.png')}
                 style={style.image}
-                resizeMode='contain'/>
+                resizeMode='contain' />
             <View style={style.inputContainer} >
                 <TextInput
                     label={"Email"}
                     mode='outlined'
                     style={style.inputs}
+                    onChangeText={(text) => setEmail(text)}
                 />
 
                 <TextInput
@@ -31,7 +35,8 @@ export default function LoginScreen() {
                     mode='outlined'
                     secureTextEntry={!isSecured}
                     style={style.inputs}
-                    right={(<TextInput.Icon icon={isSecured? "eye": "eye-off"} onPress={()=> setsecure(!isSecured)}/>)}
+                    right={(<TextInput.Icon icon={isSecured ? "eye" : "eye-off"} onPress={() => setsecure(!isSecured)} />)}
+                    onChangeText={(text) => setPassword(text)}
                 />
             </View>
 
@@ -39,9 +44,11 @@ export default function LoginScreen() {
                 <Button mode='outlined' onPress={() => { }}>
                     CRIAR CONTA
                 </Button>
-                <Button mode='contained' onPress={() => {
-                    setLogged(!isLogged)
-                    router.replace('/(app)')
+                <Button mode='contained'
+                    loading={loading}
+                    onPress={async () => {
+                        await login(email, password)
+                        if(error == undefined) router.replace('/(app)')
                     }}>
                     ENTRAR
                 </Button>
