@@ -1,18 +1,60 @@
-import { KeyboardAvoidingView, StyleSheet, View, Image } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, View, Image, Alert, Text } from 'react-native'
 import { useContext, useState } from 'react'
 import { AuthContext } from './_layout'
 import { TextInput, Button } from 'react-native-paper'
 import { router } from 'expo-router'
+import getLogin from '../services/auth'
+
+const ERRORS = {
+    INVALID_EMAIL: '',
+    
+}
 
 export default function LoginScreen() {
 
-    //TODO criar uma função de login que chama a hook se houver dados, redireciona e salva no contexto
+    const { setLogged, setToken, setUser, isLogged } = useContext(AuthContext)
 
-    const [isSecured, setsecure] = useState(false)
-    const { login, error } = useContext(AuthContext)
+    const [disabled, setDisabled] = useState(false)
+    const [isSecured, setSecure] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [isValidEmail, setValid] = useState(true)
+
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [loading, setLoading] = useState(false)
+
+    const validateEmailInput = (email: string) => {
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(email)) {
+            setValid(false)
+            return
+        }
+
+        setValid(true)
+    }
+
+    async function login(email: string, password: string) {
+        try {
+            const response = await getLogin(email, password)
+            if (!response.error) {
+                setToken(response.token)
+                setLogged(!isLogged)
+                setUser(response.user)
+
+                setTimeout(() => {
+                    router.replace('/(app)')
+                }, 5);
+            } else {
+                Alert.alert('Erro', response.message)
+            }
+        } catch (error) {
+            Alert.alert('Oops!', 'Verifique sua conxão com a internet.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
 
     return (
         <KeyboardAvoidingView
@@ -26,30 +68,51 @@ export default function LoginScreen() {
                 <TextInput
                     label={"Email"}
                     mode='outlined'
-                    style={style.inputs}
-                    onChangeText={(text) => setEmail(text)}
+                    style={[style.inputs, { borderColor: 'red' }]}
+                    error={!isValidEmail}
+                    onChangeText={(text) => {
+                        validateEmailInput(text)
+                        setEmail(text)
+                    }}
+
                 />
+                <Text
+                    style={{
+                        position: 'absolute',
+                        top: 59,
+                        fontSize: 12,
+                        left: 10,
+                        color: 'red',
+                        display: isValidEmail ? 'none' : 'flex'
+                    }}
+                >Email inválido</Text>
 
                 <TextInput
                     label={"Senha"}
                     mode='outlined'
                     secureTextEntry={!isSecured}
                     style={style.inputs}
-                    right={(<TextInput.Icon icon={isSecured ? "eye" : "eye-off"} onPress={() => setsecure(!isSecured)} />)}
+                    right={(<TextInput.Icon icon={isSecured ? "eye" : "eye-off"} onPress={() => setSecure(!isSecured)} />)}
                     onChangeText={(text) => setPassword(text)}
                 />
             </View>
 
             <View style={style.buttonContainer}>
-                <Button mode='outlined' onPress={() => { }}>
+                <Button mode='outlined' onPress={() => { }} role='button'>
                     CRIAR CONTA
                 </Button>
-                <Button mode='contained'
+                <Button
+                    mode='contained'
                     loading={loading}
+                    disabled={disabled}
                     onPress={async () => {
-                        await login(email, password)
-                        if(error == undefined) router.replace('/(app)')
-                    }}>
+                        if (isValidEmail) {
+                            setLoading(true)
+                            setDisabled(true)
+                            await login(email, password)
+                        }
+                    }}
+                >
                     ENTRAR
                 </Button>
             </View>
@@ -71,7 +134,7 @@ const style = StyleSheet.create({
     },
     inputContainer: {
         width: '90%',
-        gap: 15
+        gap: 19
     },
     buttons: {
         width: '25%',

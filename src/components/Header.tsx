@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "react-native-paper";
 
 type HeaderProps = {
-    leftText: string,
+    leftText: string | undefined,
     leftIcon?: boolean,
     rightButton?: {
         buttonText: string,
@@ -21,9 +21,9 @@ export default function Header({ leftText, leftIcon, rightButton }: HeaderProps)
             style={[style.header, { justifyContent: rightButton === undefined ? 'flex-start' : 'space-around' }]}>
             <View style={[style.headerTextContainer, { marginLeft: rightButton === undefined ? 33 : 0 }]}>
                 {leftIcon && (
-                    <MaterialIcons name={'person'} size={15} color={style.headerText.color} />
+                    <MaterialIcons name={'person'} size={25} color={style.headerText.color} />
                 )}
-                <Text style={style.headerText}>OLÁ {leftText}</Text>
+                <Text style={style.headerText}>Olá, {leftText}</Text>
             </View>
 
             {rightButton && (
@@ -52,7 +52,7 @@ const style = StyleSheet.create({
     },
     headerText: {
         color: 'white',
-        fontSize: 15,
+        fontSize: 18,
         marginLeft: 5
     },
     headerTextContainer: {

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { useContext } from 'react'
 import { AuthContext } from '../_layout'
 import { router } from 'expo-router'
@@ -9,11 +9,11 @@ import Card from '@/src/components/Card'
 
 export default function HomeScreen() {
 
-    const { isLogged, setLogged }: AuthProps = useContext(AuthContext)
+    const { isLogged, setLogged, user, token }: AuthProps = useContext(AuthContext)
 
     return (
         <View style={style.screen}>
-            <Header leftText='Olá'
+            <Header leftText={user?.name}
                 rightButton={{ buttonColor: 'green', buttonText: 'INICIAR', buttonMode: 'contained', disabled: false }}
                 leftIcon/>
             <Card
@@ -30,10 +30,11 @@ export default function HomeScreen() {
             <Button onPress={() => {
                 setLogged(!isLogged)
                 router.replace('/login')
-            }
-            }>
+            }}>
                 sair
             </Button>
+
+            <Text>{token}</Text>
         </View>
     )
 }

@@ -1,11 +1,11 @@
 import { useContext } from 'react'
 import { AuthContext } from '../_layout'
-import { Redirect, router, Stack } from 'expo-router'
+import { Redirect, Stack } from 'expo-router'
 import AuthProps from '@/src/types/AuthProps'
 
 export default function Layout() {
 
-    //TODO fazer uma verificação melhor com a hook
+    
     const { isLogged }: AuthProps = useContext(AuthContext)
 
     if(!isLogged){

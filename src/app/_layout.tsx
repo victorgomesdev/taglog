@@ -1,28 +1,27 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { Stack } from 'expo-router'
 import AuthProps from '../types/AuthProps'
-import useAuth from '../hooks/useAuth'
 import { PaperProvider } from 'react-native-paper'
 import { theme } from '../constants/Theme'
+import User from '../types/User'
 
 export const AuthContext = createContext<AuthProps>({
-    isLogged: false,
-    login: (email, password) => {
-        return new Promise<void>((a, r) => { })
-    },
-    setLogged: ()=>{}
+    isLogged: false
 })
 
 export default function Layout() {
 
+    const [isLogged, setLogged] = useState(false)
+    const [token, setToken] = useState<string>('')
+    const [user, setUser] = useState<User>()
+    const [error, setError] = useState<string>('')
 
-    const { isLogged, error, login, token, user, setLogged } = useAuth()
 
     const AuthProvider = ({ children }: any) => {
 
         return (
             <AuthContext.Provider value={{
-                isLogged, error, login, token, user, setLogged
+                isLogged, token, error, user, setError, setLogged, setToken, setUser
             }}>
                 {children}
             </AuthContext.Provider>
